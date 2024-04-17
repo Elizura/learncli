@@ -1,16 +1,17 @@
 
 from dataclasses import dataclass
-from typing import Dict, List
+from injector import inject
 import yaml
 from Commons.constants import QUESTIONS_SOURCE_PATH
 from Questions.core import Question
+from Terminal.terminal import Terminal
 
 
+@inject
 @dataclass
 class QuestionsRepo:
 
-    def __init__(self) -> None:
-        pass
+    terminal:Terminal
 
     def add_question(self) -> None:
         pass
