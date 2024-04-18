@@ -1,9 +1,10 @@
 from dataclasses import dataclass
-import os
+from injector import inject
 
 from Questions.core import Question
 
 
+@inject
 @dataclass
 class Terminal:
 
