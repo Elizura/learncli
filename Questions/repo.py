@@ -4,14 +4,11 @@ from injector import inject
 import yaml
 from Commons.constants import QUESTIONS_SOURCE_PATH
 from Questions.core import Question
-from Terminal.terminal import Terminal
 
 
 @inject
 @dataclass
-class QuestionsRepo:
-
-    terminal:Terminal
+class QuestionsRepo:    
 
     def add_question(self) -> None:
         pass
