@@ -1,13 +1,14 @@
 FROM ubuntu:latest
-RUN apt-get update && apt-get install -y python3
-# Install pip
-RUN apt-get update && \
-    apt-get install -y python3-pip && \
-    pip install --upgrade pip && \
-    apt-get clean
 
-# Install dependencies
-RUN pip install prompt_toolkit
-WORKDIR /app
-COPY questions.py /app
-CMD ["python3", "/app/questions.py"]
+RUN apt update && apt install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && apt install -y python3.10
+
+RUN apt install -y python3-pip && apt clean && pip install --upgrade pip==24.0
+
+WORKDIR /learncli
+
+COPY . /learncli
+
+RUN pip install -r /learncli/requirements.txt
+
+CMD ["python3", "main.py"]
