@@ -9,13 +9,13 @@ from Terminal.terminal import Terminal
 class AppModule(Module):
     def configure(self, binder):
         binder.bind(QuestionsRepo, to=QuestionsRepo, scope=singleton)
-        binder.bind(TerminalRepo, to=TerminalRepo, scope=singleton) 
-        binder.bind(DBRepo, to=DBRepo, scope=singleton)       
+        binder.bind(TerminalRepo, to=TerminalRepo, scope=singleton)
+        binder.bind(DBRepo, to=DBRepo, scope=singleton)
 
 
 if __name__ == "__main__":
-    injector = Injector([AppModule()]) 
-    db_repo = injector.get(DBRepo)   
+    injector = Injector([AppModule()])
+    db_repo = injector.get(DBRepo)
     db_repo.get_status()
     terminal = injector.get(Terminal)
     terminal.run()
