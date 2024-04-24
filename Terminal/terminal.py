@@ -1,3 +1,4 @@
+import argparse
 import os
 from dataclasses import dataclass
 from injector import inject
@@ -7,7 +8,6 @@ from Questions.core import Question
 from Questions.repo import QuestionsRepo
 from Terminal.repo import TerminalRepo
 from prompt_toolkit.styles import Style
-from prompt_toolkit.shortcuts import clear
 
 
 @dataclass
@@ -26,19 +26,31 @@ class Terminal:
             }
         )
 
-    def run(self):
+    def display_content(self, question:Question):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        question = question.description + "\n" + question.description + question.description
+        lines = question.split('\n')
+        max_length = max(len(line) for line in lines)
+        
+        print("╔" + "═" * (max_length + 4) + "╗")
+                
+        for line in lines:
+            padding = max_length - len(line)
+            print("║  " + line + " " * padding + "  ║")
+                
+        print("╚" + "═" * (max_length + 4) + "╝")
+
+    def run(self):        
         level, question_number = self.db_repo.get_status()
         question = self.repo.get_question(level=level, question_number=question_number)
-        while True:
-            clear()
-            print(question.description)
+        while True:                        
+            self.display_content(question=question)
             is_correct = False
             while not is_correct:
                 submitted, cmd = self.handle_inputs()
                 if submitted:
                     is_correct = self.check_answer(question=question)
-                    if is_correct:
-                        print("CORRECTUMUNDO")
+                    if is_correct:                        
                         self.db_repo.set_status(level=level, qno=question_number + 1)
                         level, question_number = self.db_repo.get_status()
                         question = self.repo.get_question(
