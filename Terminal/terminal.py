@@ -1,4 +1,5 @@
 import argparse
+from enum import Enum
 import os
 from dataclasses import dataclass
 from injector import inject
@@ -8,6 +9,13 @@ from Questions.core import Question
 from Questions.repo import QuestionsRepo
 from Terminal.repo import TerminalRepo
 from prompt_toolkit.styles import Style
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.keys import Keys
+
+
+class Command(Enum):
+    QUIT = 1
+    SUBMIT = 2
 
 
 @dataclass
@@ -26,31 +34,38 @@ class Terminal:
             }
         )
 
-    def display_content(self, question:Question):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        question = question.description + "\n" + question.description + question.description
-        lines = question.split('\n')
+    def clear_screen(self):
+        os.system("cls" if os.name == "nt" else "clear")
+
+    def display_content(self, content):
+        self.clear_screen()
+        lines = content.split("\n")
         max_length = max(len(line) for line in lines)
-        
+
         print("╔" + "═" * (max_length + 4) + "╗")
-                
+
         for line in lines:
             padding = max_length - len(line)
             print("║  " + line + " " * padding + "  ║")
-                
+
         print("╚" + "═" * (max_length + 4) + "╝")
 
-    def run(self):        
+    def run(self):
         level, question_number = self.db_repo.get_status()
         question = self.repo.get_question(level=level, question_number=question_number)
-        while True:                        
-            self.display_content(question=question)
+        quit = False
+        while not quit:
+            self.display_content(content=question.description)
             is_correct = False
-            while not is_correct:
+            while not is_correct and not quit:
                 submitted, cmd = self.handle_inputs()
+                if cmd == Command.QUIT:
+                    self.clear_screen()
+                    quit = True
+                    break
                 if submitted:
                     is_correct = self.check_answer(question=question)
-                    if is_correct:                        
+                    if is_correct:
                         self.db_repo.set_status(level=level, qno=question_number + 1)
                         level, question_number = self.db_repo.get_status()
                         question = self.repo.get_question(
@@ -60,17 +75,29 @@ class Terminal:
                     os.system(cmd)
 
     def handle_inputs(self):
-        inp = prompt(
-            "> ",
-            history=self.terminal_repo.get_terminal_history(),
-            multiline=False,
-            enable_system_prompt=True,
-            style=self.custom_style,
-        )
-        if inp.lower() == "submit":
-            return True, ""
-        else:
+        kb = KeyBindings()
+
+        @kb.add('c-s')
+        def _(event):
+            event.app.exit(result=Command.SUBMIT)
+
+        try:
+            inp = prompt(
+                "> ",
+                history=self.terminal_repo.get_terminal_history(),
+                multiline=False,
+                enable_system_prompt=True,
+                style=self.custom_style,
+                key_bindings=kb,
+            )
+
+            if inp == Command.SUBMIT:
+                return True, _
+
             return False, inp
+
+        except KeyboardInterrupt:
+            return _, Command.QUIT
 
     def check_answer(self, question: Question):
         expected_output = question.expected_output
