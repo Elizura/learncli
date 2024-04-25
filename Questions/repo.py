@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from injector import inject
 import yaml
 from Commons.constants import QUESTIONS_SOURCE_PATH
-from Questions.core import Question
+from Questions.core import Question, QuestionType
 
 
 @inject
@@ -23,6 +23,7 @@ class QuestionsRepo:
                 description = question_info["description"]
                 command = question_info["command"]
                 expected_output = question_info["expected_output"]
+                question_type = QuestionType(question_info["type"])
                 question = Question(
                     id=id,
                     command=command,
@@ -30,6 +31,7 @@ class QuestionsRepo:
                     expected_output=expected_output,
                     level=level,
                     question_number=question_number,
+                    type=question_type,
                 )
                 questions.append(question)
         return questions
