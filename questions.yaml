@@ -88,3 +88,830 @@
   command: wc -l hello.txt
   expected_output:    
       - 3 hello.txt
+
+
+- id: 12
+  level: 1
+  type: 2
+  question_number: 12
+  description: A list of files
+  command: ls
+  expected_output:
+    - night-before-christmas.txt
+
+- id: 13
+  level: 1
+  type: 2
+  question_number: 13
+  description: Two lines a-laughing
+  command: grep laugh night-before-christmas.txt
+  expected_output:
+    - That shook when he laughed, like a bowlful of jelly.
+    - And I laughed when I saw him, in spite of myself;
+
+- id: 14
+  level: 1
+  type: 2
+  question_number: 14
+  description: Three lines at the beginning
+  command: head -3 night-before-christmas.txt
+  expected_output:
+    - "'Twas the night before Christmas, when all through the house"
+    - "Not a creature was stirring, not even a mouse;"
+    - "The stockings were hung by the chimney with care"
+
+- id: 15
+  level: 1
+  type: 2
+  question_number: 15
+  description: Four lines at the end
+  command: tail -4 night-before-christmas.txt
+  expected_output:
+    - "He sprang to his sleigh, to his team gave a whistle,"
+    - "And away they all flew like the down of a thistle."
+    - "But I heard him exclaim, ere he drove out of sight,"
+    - '"Happy Christmas to all, and to all a good-night."'
+
+- id: 16
+  level: 1
+  type: 2
+  question_number: 16
+  description: Five lines that start with "the"
+  command: grep -i "^the" night-before-christmas.txt
+  expected_output:
+    - The stockings were hung by the chimney with care
+    - The children were nestled all snug in their beds,
+    - The moon on the breast of the new-fallen snow
+    - The prancing and pawing of each little hoof.
+    - The stump of a pipe he held tight in his teeth,
+
+- id: 17
+  level: 1
+  type: 2
+  question_number: 17
+  description: Six lines that are exciting!
+  command: grep \!$ night-before-christmas.txt
+  expected_output:
+    - Now, Dasher! now, Dancer! now, Prancer and Vixen!
+    - On, Comet! on, Cupid! on, Donder and Blitzen!
+    - To the top of the porch! to the top of the wall!
+    - Now dash away! dash away! dash away all!
+    - His eyes--how they twinkled! his dimples how merry!
+    - His cheeks were like roses, his nose like a cherry!
+
+- id: 18
+  level: 1
+  type: 1
+  question_number: 18
+  description: Seven files that start with Santa
+  command: ls -1 [Ss]anta*
+  expected_output:
+    - Santa's beard
+    - Santa's belly
+    - Santa's hat
+    - Santa's reindeer
+    - Santa's sleigh
+    - Santa's toys
+    - Santa's village
+
+- id: 19
+  level: 1
+  type: 1
+  question_number: 19
+  description: Eight elves
+  command: mv Elves/* Workshop/
+  expected_output: []
+
+- id: 20
+  level: 1
+  type: 2
+  question_number: 20
+  description: Nine Reindeer
+  command: find . -type f
+  expected_output:
+    - Dasher
+    - Rudolph
+    - Dancer
+    - Prancer
+    - Vixen
+    - Comet
+    - Cupid
+    - Dunder
+    - Blixem
+
+- id: 21
+  level: 1
+  type: 2
+  question_number: 21
+  description: Ten Lords
+  command: sort lords.txt
+  expected_output:
+    - Lord Asriel
+    - Lord Buckethead
+    - Lord Drinian
+    - Lord Elrond
+    - Lord Farquaad
+    - Lord Gendry
+    - Lord Glenarvan
+    - Lord Macduff
+    - Lord Palpatine
+    - Lord Snooty
+
+- id: 22
+  level: 2
+  type: 1
+  question_number: 12
+  description: Print the piping music played by the pipers
+  command: find . -name "piper" -exec grep piping {} \;
+  expected_output:
+    lines:
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+      - ♫ piping ♫
+  tags: ["12days"]
+
+- id: 23
+  level: 2
+  type: 1
+  question_number: 13
+  description: Print the contents of the file "twelve-days-of-shell.txt"
+  command: cat twelve-days-of-shell.txt
+  expected_output:
+    lines:
+      - 🥁 🎵 🎶 🎵 🥁
+      - On the twelfth day of Shell my true love gave to me
+      - Twelve days of Shell on the terminal
+      - Eleven lines with pipers ♫ piping ♫
+      - Ten lords by their names sorted
+      - Nine names of Santa's reindeer
+      - Eight elves in Santa's Workshop
+      - Seven files that start with "Santa"
+      - Six lines that are exciting!
+      - Five lines that start with "the"
+      - Four lines at the end
+      - Three lines at the beginning
+      - Two lines a-laughing
+      - And a list of files in the directory tree
+      - 🥁 🎵 🎶 🎵 🥁
+  tags: ["12days"]
+
+- id: 24
+  level: 2
+  type: 2
+  question_number: 14
+  description: Print the current working directory
+  command: pwd
+  expected_output:
+    lines:
+      - '/var/challenges/oops_cwd'
+  tags: ["oops"]
+
+- id: 25
+  level: 2
+  type: 2
+  question_number: 15
+  description: List all files in the current directory on a single line
+  command: echo *
+  expected_output:
+    lines:
+      - 'another-file.txt my-dissertation.txt'
+  tags: ["oops"]
+
+- id: 26
+  level: 2
+  type: 2
+  question_number: 16
+  description: Print the contents of the file "my-dissertation.txt"
+  command: 'while read x; do echo $x; done < my-dissertation.txt'
+  expected_output:
+    lines:
+      - "Rooter: A Methodology for the Typical Unification"
+      - ""
+      - of Access Points and Redundancy
+      - ""
+      - Jeremy Stribling, Daniel Aguayo and Maxwell Krohn
+      - ""
+      - ABSTRACT
+      - ""
+      - Many physicists would agree that, had it not been for
+      - congestion control, the evaluation of web browsers might never
+      - have occurred. In fact, few hackers worldwide would disagree
+      - with the essential uniﬁcation of voice-over-IP and public-
+      - private key pair. In order to solve this riddle, we conﬁrm that
+      - SMPs can be made stochastic, cacheable, and interposable.
+      - ...
+  tags: ["oops"]
+
+- id: 27
+  level: 2
+  type: 2
+  question_number: 17
+  description: Print the name of the process that is deleting files
+  command: 'echo "$(</proc/42/cmdline)"'
+  expected_output:
+    lines:
+      - 'oops-this-will-delete-bin-dirs'
+  tags: ["oops"]
+
+- id: 28
+  level: 2
+  type: 1
+  question_number: 18
+  description: Kill the process that is deleting files
+  command: 'kill -9 42'
+  expected_output: []
+  tags: ["oops"]
+
+- id: 29
+  level: 2
+  type: 2
+  question_number: 19
+  description: Print "hello world" on the terminal
+  command: echo 'hello world'
+  expected_output:
+    lines:
+      - 'hello world'
+
+- id: 30
+  level: 2
+  type: 2
+  question_number: 20
+  description: Print the current working directory
+  command: pwd
+  expected_output:
+    lines:
+      - '/var/challenges/current_working_directory'
+
+- id: 31
+  level: 2
+  type: 2
+  question_number: 21
+  description: List names of all the files in the current directory, one file per line
+  command: ls
+  expected_output:
+    lines:
+      - '01-take.txt'
+      - '02-the.txt'
+      - '03-command.txt'
+      - '04-challenge.txt'
+
+- id: 32
+  level: 2
+  type: 2
+  question_number: 22
+  description: Print the contents of the file "access.log"
+  command: cat access.log
+  expected_output:
+    lines:
+      - 163.56.115.58 - - [09/Jan/2017:22:29:57 +0100] "GET /posts/2/display HTTP/1.0" 200 3240
+      - 75.113.188.234 - - [09/Jan/2017:22:30:43 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 1116
+      - 69.16.40.148 - - [09/Jan/2017:22:34:33 +0100] "GET /pages/create HTTP/1.0" 500 3471
+      - 225.219.54.140 - - [09/Jan/2017:22:35:30 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 500 2477
+      - 207.243.19.2 - - [09/Jan/2017:22:38:03 +0100] "GET /bar/create HTTP/1.0" 200 1116
+      - 199.37.62.156 - - [09/Jan/2017:22:42:18 +0100] "GET /posts/1/display HTTP/1.0" 200 2477
+      - 55.74.240.123 - - [09/Jan/2017:22:44:25 +0100] "POST /posts/1/display HTTP/1.0" 200 3471
+      - 251.111.109.143 - - [09/Jan/2017:22:49:02 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 2477
+      - 101.163.230.250 - - [09/Jan/2017:22:52:31 +0100] "DELETE /posts/2/display HTTP/1.0" 404 2477
+      - 200.19.168.148 - - [09/Jan/2017:22:57:11 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 3471
+
+- id: 33
+  level: 2
+  type: 2
+  question_number: 23
+  description: Print the last 5 lines of "access.log"
+  command: tail -n 5 access.log
+  expected_output:
+    lines:
+      - 199.37.62.156 - - [09/Jan/2017:22:42:18 +0100] "GET /posts/1/display HTTP/1.0" 200 2477
+      - 55.74.240.123 - - [09/Jan/2017:22:44:25 +0100] "POST /posts/1/display HTTP/1.0" 200 3471
+      - 251.111.109.143 - - [09/Jan/2017:22:49:02 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 2477
+      - 101.163.230.250 - - [09/Jan/2017:22:52:31 +0100] "DELETE /posts/2/display HTTP/1.0" 404 2477
+      - 200.19.168.148 - - [09/Jan/2017:22:57:11 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 3471
+
+- id: 34
+  level: 2
+  type: 1
+  question_number: 24
+  description: Create an empty file named "take-the-command-challenge"
+  command: touch take-the-command-challenge
+  expected_output: []
+
+- id: 35
+  level: 2
+  type: 1
+  question_number: 25
+  description: Create a directory named "tmp/files"
+  command: mkdir -p tmp/files
+  expected_output: []
+
+- id: 36
+  level: 2
+  type: 1
+  question_number: 26
+  description: Copy the file "take-the-command-challenge" to the directory "tmp/files"
+  command: cp take-the-command-challenge tmp/files/.
+  expected_output: []
+
+- id: 37
+  level: 1
+  type: 1
+  question_number: 37
+  description: Move the file named `take-the-command-challenge` to the directory `tmp/files`
+  command: mv take-the-command-challenge tmp/files/.
+  expected_output: []
+
+- id: 38
+  level: 1
+  type: 1
+  question_number: 38
+  description: Create a symbolic link named `take-the-command-challenge` that points to the file `tmp/files/take-the-command-challenge`.
+  command: ln -s /var/challenges/create_symlink/tmp/files/take-the-command-challenge
+  expected_output: []
+
+- id: 39
+  level: 1
+  type: 1
+  question_number: 39
+  description: Delete all of the files in this challenge directory including all subdirectories and their contents.
+  command: find . -delete
+  expected_output: []
+
+- id: 40
+  level: 1
+  type: 1
+  question_number: 40
+  description: Remove all files with the .doc extension recursively in the current working directory.
+  command: rm **/*.doc
+  expected_output: []
+
+- id: 41
+  level: 1
+  type: 1
+  question_number: 41
+  description: Print all lines in the file `access.log` that contain the string "GET".
+  command: grep 'GET' access.log
+  expected_output:
+    lines:
+      - 163.56.115.58 - - [09/Jan/2017:22:29:57 +0100] "GET /posts/2/display HTTP/1.0" 200 3240
+      - 75.113.188.234 - - [09/Jan/2017:22:30:43 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 1116
+      - 69.16.40.148 - - [09/Jan/2017:22:34:33 +0100] "GET /pages/create HTTP/1.0" 500 3471
+      - 225.219.54.140 - - [09/Jan/2017:22:35:30 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 500 2477
+      - 207.243.19.2 - - [09/Jan/2017:22:38:03 +0100] "GET /bar/create HTTP/1.0" 200 1116
+      - 199.37.62.156 - - [09/Jan/2017:22:42:18 +0100] "GET /posts/1/display HTTP/1.0" 200 2477
+      - 251.111.109.143 - - [09/Jan/2017:22:49:02 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 2477
+      - 200.19.168.148 - - [09/Jan/2017:22:57:11 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 3471
+
+- id: 42
+  level: 1
+  type: 1
+  question_number: 42
+  description: Print all files in the current directory, one per line (not the path, just the filename) that contain the string "500".
+  command: grep -l 500 *
+  expected_output:
+    order: false
+    lines:
+      - access.log
+      - access.log.1
+
+- id: 43
+  level: 1
+  type: 1
+  question_number: 43
+  description: Print the relative file paths, one path per line for all filenames that start with "access.log" in the current directory.
+  command: find . -name 'access.log*'
+  expected_output:
+    order: false
+    re_sub: ['^\./', '']
+    lines:
+      - 'access.log'
+      - 'access.log.1'
+      - 'access.log.2'
+
+- id: 44
+  level: 1
+  type: 1
+  question_number: 44
+  description: Print all matching lines (without the filename or the file path) in all files under the current directory that start with "access.log" that contain the string "500".
+  command: grep -h 500 **/access.log*
+  expected_output:
+    order: false
+    lines:
+      - 69.16.40.148 - - [09/Jan/2017:22:34:33 +0100] "GET /pages/create HTTP/1.0" 500 3471
+      - 225.219.54.140 - - [09/Jan/2017:22:35:30 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 500 2477
+      - 2.71.250.27 - - [09/Jan/2017:22:41:26 +0100] "GET /pages/create HTTP/1.0" 500 2477
+
+- id: 45
+  level: 1
+  type: 1
+  question_number: 45
+  description: Extract all IP addresses from files that start with "access.log" printing one IP address per line.
+  command: grep -Pho '^\d+\.\d+\.\d+\.\d+' **/access.log*
+  expected_output:
+    re_sub: ['^[\w/.]*?:', '']
+    order: false
+    lines:
+      - 163.56.115.58
+      - 75.113.188.234
+      - 69.16.40.148
+      - 225.219.54.140
+      - 207.243.19.2
+      - 199.37.62.156
+      - 55.74.240.123
+      - 251.111.109.143
+      - 101.163.230.250
+      - 200.19.168.148
+      - 108.68.174.15
+      - 17.2.20.139
+      - 28.151.137.59
+      - 199.150.241.179
+      - 2.71.250.27
+      - 17.137.186.194
+      - 151.84.119.34
+      - 4.180.204.195
+      - 9.230.96.54
+      - 157.143.233.21
+
+- id: 46
+  level: 1
+  type: 1
+  question_number: 46
+  description: Count the number of files in the current working directory. Print the number of files as a single integer.
+  command: find -L . -type f | wc -l
+  expected_output:
+    re_sub: ['^\s+', '']
+    lines:
+      - '2'
+
+- id: 47
+  level: 1
+  type: 1
+  question_number: 47
+  description: Print the contents of `access.log` sorted.
+  command: sort access.log
+  expected_output:
+    lines:
+      - 101.163.230.250 - - [09/Jan/2017:22:52:31 +0100] "DELETE /posts/2/display HTTP/1.0" 404 2477
+      - 163.56.115.58 - - [09/Jan/2017:22:29:57 +0100] "GET /posts/2/display HTTP/1.0" 200 3240
+      - 199.37.62.156 - - [09/Jan/2017:22:42:18 +0100] "GET /posts/1/display HTTP/1.0" 200 2477
+      - 200.19.168.148 - - [09/Jan/2017:22:57:11 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 3471
+      - 207.243.19.2 - - [09/Jan/2017:22:38:03 +0100] "GET /bar/create HTTP/1.0" 200 1116
+      - 225.219.54.140 - - [09/Jan/2017:22:35:30 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 500 2477
+      - 251.111.109.143 - - [09/Jan/2017:22:49:02 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 2477
+      - 55.74.240.123 - - [09/Jan/2017:22:44:25 +0100] "POST /posts/1/display HTTP/1.0" 200 3471
+      - 69.16.40.148 - - [09/Jan/2017:22:34:33 +0100] "GET /pages/create HTTP/1.0" 500 3471
+      - 75.113.188.234 - - [09/Jan/2017:22:30:43 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 1116
+
+- id: 48
+  level: 1
+  type: 1
+  question_number: 48
+  description: Print the number of lines in `access.log` that contain the string "GET".
+  command: grep -c "GET" access.log
+  expected_output:
+    re_sub: ['^\s+', '']
+    lines:
+      - '8'
+
+- id: 49
+  level: 1
+  type: 1
+  question_number: 49
+  description: The file `split-me.txt` contains a list of numbers separated by a `;` character. Split the numbers on the `;` character, one number per line.
+  command: tr ';' '\n' < split-me.txt
+  expected_output:
+    lines: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+
+- id: 50
+  level: 1
+  type: 1
+  question_number: 50
+  description: Print the numbers 1 to 100 separated by spaces.
+  command: echo $(seq 1 100)
+  expected_output:
+    lines:
+      - 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100
+
+- id: 51
+  level: 1
+  type: 1
+  question_number: 51
+  description: This challenge has text files (with a .txt extension) that contain the phrase "challenges are difficult". Delete this phrase from all text files recursively.
+  command: sed -i 's/challenges are difficult//g' **/*.txt
+  expected_output: []
+
+- id: 52
+  level: 1
+  type: 1
+  question_number: 52
+  description: The file `sum-me.txt` has a list of numbers, one per line. Print the sum of these numbers.
+  command: paste -sd+ sum-me.txt | bc
+  expected_output:
+    lines:
+      - "42"
+
+- id: 53
+  level: 1
+  type: 1
+  question_number: 53
+  description: Print all files in the current directory recursively without the leading directory path.
+  command: find -type f -printf '%f\n'
+  expected_output:
+    order: false
+    lines:
+      - animi.doc
+      - corporis.xls
+      - odit.doc
+      - beatae.flac
+      - error.doc
+      - libero.xls
+      - necessitatibus.doc
+      - totam
+
+- id: 54
+  level: 1
+  type: 1
+  question_number: 54
+  description: Rename all files removing the extension from them in the current directory recursively.
+  command: for f in $(find . -type f -name "*.*"); do mv "$f" "${f%.*}"; done
+  expected_output: []
+
+- id: 55
+  level: 1
+  type: 1
+  question_number: 55
+  description: List all of the files (filenames only) in the current directory but replace all spaces with a '.' character.
+  command: ls | tr ' ' '.'
+  expected_output:
+    order: false
+    lines: ['Adam.Simpson', 'Alexis.Stein', 'Allison.Brown', 'Amy.Anderson', 'Angel.Saunders',
+            'Brad.Michael', 'Briana.Wilson', 'Carrie.Alexander', 'Christine.Valdez', 'Christopher.Miller',
+            'Claudia.Mccormick', 'Corey.Bird', 'Courtney.Miller', 'Crystal.Dunn', 'Crystal.Valdez',
+            'Erica.Richardson', 'James.Harper', 'James.Roberts', 'Jared.Hill.DVM', 'John.Nguyen',
+            'Jorge.Ross', 'Joseph.Hurst', 'Karen.Ramirez', 'Kevin.Price', 'Kimberly.Parker', 'Lori.Macias',
+            'Luke.Mason', 'Lynn.Robinson', 'Mallory.Peterson', 'Marie.Gutierrez', 'Matthew.Romero',
+            'Michaela.Hobbs', 'Molly.Stevens', 'Mr..James.Lopez', 'Mr..Shawn.Martin', 'Mrs..Jade.Clark',
+            'Olivia.Irwin', 'Parker.Gilbert', 'Robert.Gregory', 'Robert.Hill', 'Sarah.Hill',
+            'Scott.Rice', 'Sheri.Bishop', 'Tamara.Anderson', 'Tammy.Galloway', 'Terri.Young', 'Thomas.Parks',
+            'Thomas.Washington', 'Tiffany.Clark', 'Yvonne.Myers']
+
+- id: 37
+  level: 1
+  type: 1
+  question_number: 37
+  description: Print all directories containing one or more files with a `.tf` extension.
+  command: find . -name "*.tf" -exec dirname {} \; | sort | uniq
+  expected_output:
+    order: false
+    re_sub: ['^\./', '']
+    lines:
+      - 'terraform'
+      - 'terraform/modules/load_balancer'
+      - 'terraform/modules/virtual_machine'
+      - 'terraform/modules/vpn'
+
+- id: 38
+  level: 1
+  type: 1
+  question_number: 38
+  description: Print the filenames of all files starting with a number recursively in the current directory.
+  command: find . -type f -name '[[:digit:]]*' -printf '%f\n'
+  expected_output:
+    order: false
+    lines:
+      - '974Michael Bowman'
+      - '540Katherine Jones'
+      - '436Teresa Owens'
+      - '04Carrie Alexander'
+      - '778Holly Archer'
+      - '3maxime.mp3'
+      - '682Terri Jones'
+      - '511Tammy Welch'
+      - '293Linda Bennett'
+      - '670James Jacobs'
+      - '737Jeffrey Davis'
+      - '42Robert Hill'
+      - '25Brandon Mcdonald'
+      - '402Nancy Henson'
+      - '78Michelle Spencer'
+      - '132Rebecca Rubio'
+      - '639Charles Ferguson'
+      - '335John Joseph'
+      - '99blanditiis.avi'
+      - '477Thomas Pierce MD'
+      - '757Robert Marquez'
+      - '388Andrew Carter'
+      - '48Thomas Allen'
+      - '593Brett Martin'
+
+- id: 39
+  level: 1
+  type: 1
+  question_number: 39
+  description: Print the 25th line of the file `faces.txt`.
+  command: sed -n '25p' faces.txt
+  expected_output:
+    lines:
+      - '¯\_(ツ)_/¯'
+
+- id: 40
+  level: 1
+  type: 1
+  question_number: 40
+  description: Print the lines of the file `reverse-me.txt` in reverse order.
+  command: tac reverse-me.txt
+  expected_output:
+    lines:
+      - '-Jonathan Reed "The Lost Generation"'
+      - '~~~~~~~~~~~~~~~~~~~~~'
+      - 'There is hope'
+      - 'It is foolish to presume that'
+      - 'My generation is apathetic and lethargic'
+      - 'It will be evident that'
+      - 'My peers and I care about this earth'
+      - 'No longer can it be said that'
+      - 'Environmental destruction will be the norm'
+      - 'In the future'
+      - '~~~~~~~~~~~~~~~~~~~~~'
+
+- id: 41
+  level: 1
+  type: 1
+  question_number: 41
+  description: Print the file `faces.txt`, removing duplicate lines while preserving order.
+  command: awk '!x[$0]++' faces.txt
+  expected_output:
+    lines:
+      - '(◕‿◕)'
+      - '(^̮^)'
+      - 'ʘ‿ʘ'
+      - 'ಠ_ಠ'
+      - 'ಠ⌣ಠ'
+      - 'ಠ‿ಠ'
+      - '(ʘ‿ʘ)'
+      - '(ಠ_ಠ)'
+      - '¯\_(ツ)_/¯'
+      - '(ಠ⌣ಠ'
+      - 'ಠಠ⌣ಠ)'
+      - '(ಠ‿ಠ)'
+      - '٩◔̯◔۶'
+      - 'ヽ༼ຈل͜ຈ༽ﾉ'
+      - '♥‿♥'
+      - '◔̯◔'
+      - '⊙﹏⊙'
+      - '(¬_¬)'
+      - '(；一_一)'
+      - '(͡° ͜ʖ ͡°)'
+      - '(° ͜ʖ °)'
+      - '¯\(°_o)/¯'
+      - '( ﾟヮﾟ)'
+      - '(︺︹︺)'
+
+- id: 42
+  level: 1
+  type: 1
+  question_number: 42
+  description: Print the number of unique prime numbers contained in the file `random-numbers.txt`.
+  command: 'for num in $(cat random-numbers.txt); do [[ $num == $(factor $num | cut -d" " -f2) ]] && echo $num; done | sort | uniq | wc -l'
+  expected_output:
+    lines:
+      - "12"
+
+- id: 43
+  level: 1
+  type: 1
+  question_number: 43
+  description: Print the IP addresses common to both `access.log.1` and `access.log.2`.
+  command: "comm -12 <(cut -d' ' -f1 access.log.1 | sort) <(cut -d' ' -f1 access.log.2 | sort)"
+  expected_output:
+    order: false
+    lines:
+      - 108.68.174.15
+      - 17.137.186.194
+      - 2.71.250.27
+      - 28.151.137.59
+
+- id: 44
+  level: 1
+  type: 1
+  question_number: 44
+  description: Print all lines before each occurrence of "404" in all `access.log*` files recursively.
+  command: "awk '/404/{print a}{a=$0}' **/access.log*"
+  expected_output:
+    order: false
+    lines:
+      - 251.111.109.143 - - [09/Jan/2017:22:49:02 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 2477
+      - 17.137.186.194 - - [09/Jan/2017:22:43:17 +0100] "GET /pages/create HTTP/1.0" 200 1116
+      - 89.148.148.238 - - [09/Jan/2017:22:33:09 +0100] "GET /posts/1/display HTTP/1.0" 502 2477
+      - 138.212.253.84 - - [09/Jan/2017:22:53:54 +0100] "GET /posts/foo?appID=xxxx HTTP/1.0" 200 3471
+
+- id: 45
+  level: 1
+  type: 1
+  question_number: 45
+  description: Print the filenames of all `.bin` files in the current directory that are different from `base.bin`.
+  command: "for i in $(ls *.bin); do if [[ `cmp base.bin $i` ]]; then echo $i; fi; done"
+  expected_output:
+    order: false
+    lines:
+      - test2.bin
+      - test4.bin
+      - test5.bin
+      - test7.bin
+
+- id: 46
+  level: 1
+  type: 1
+  question_number: 46
+  description: Show the contents of the file `./.../  /. .the flag.txt`.
+  command: cat './.../  /. .the flag.txt'
+  expected_failures:
+    - 'you got it!'
+  expected_output:
+    lines:
+      - 'you got it!'
+
+- id: 47
+  level: 1
+  type: 1
+  question_number: 47
+  description: Count the number of lines containing tab characters in `file-with-tabs.txt`.
+  command: grep -P '\t' file-with-tabs.txt | wc -l
+  expected_failures:
+    - "3"
+  expected_output:
+    lines:
+      - "3"
+
+- id: 48
+  level: 1
+  type: 1
+  question_number: 48
+  description: Remove all files without the `.txt` and `.exe` extensions recursively.
+  command: find . -type f -regextype posix-extended ! -regex ".*(\.txt|\.exe)$" -exec rm {} +
+  expected_failures:
+    - echo
+
+- id: 49
+  level: 1
+  type: 1
+  question_number: 49
+  description: Remove files in the current directory that start with a dash in the filename.
+  command: rm ./-*
+  expected_failures:
+    - echo
+
+- id: 50
+  level: 1
+  type: 1
+  question_number: 50
+  description: Print the contents of `ps-ef1` and `ps-ef2` sorted by PID and remove repeated lines.
+  command: "cat ps-ef1 > aux; sed '1 d' ps-ef2 >> aux; cat aux | sort -nk2,2 | uniq"
+  expected_output:
+    lines:
+      - 'UID        PID  PPID  C STIME TTY          TIME CMD'
+      - 'root         1     0  0 mar04 ?        00:00:13 /sbin/init'
+      - 'root         2     0  0 mar04 ?        00:00:00 [kthreadd]'
+      - 'root         3     2  0 mar04 ?        00:01:07 [ksoftirqd/0]'
+      - 'user         5     2  0 mar04 ?        00:00:00 [kworker/0:0H]'
+      - 'user         7     2  0 mar04 ?        00:07:06 [rcu_sched]'
+      - 'user         8     2  0 mar04 ?        00:00:00 [rcu_bh]'
+      - 'root         9     2  0 mar04 ?        00:00:00 [migration/0]'
+      - 'root        10     2  0 mar04 ?        00:00:04 [watchdog/0]'
+      - 'user        11     2  0 mar04 ?        00:00:04 [watchdog/1]'
+      - 'root        12     2  0 mar04 ?        00:00:00 [migration/1]'
+      - 'root        13     2  0 mar04 ?        00:00:59 [ksoftirqd/1]'
+      - 'user        15     2  0 mar04 ?        00:00:00 [kworker/1:0H]'
+      - 'user        16     2  0 mar04 ?        00:00:04 [watchdog/2]'
+      - 'root        17     2  0 mar04 ?        00:00:00 [migration/2]'
+      - 'root        18     2  0 mar04 ?        00:00:59 [ksoftirqd/2]'
+      - 'root        20     2  0 mar04 ?        00:00:00 [kworker/2:0H]'
+      - 'user        21     2  0 mar04 ?        00:00:04 [watchdog/3]'
+      - 'root        22     2  0 mar04 ?        00:00:00 [migration/3]'
+      - 'root        23     2  0 mar04 ?        00:01:29 [ksoftirqd/3]'
+
+- id: 51
+  level: 1
+  type: 1
+  question_number: 51
+  description: Print all IPv4 listening ports from the `netstat.out` file, sorted from highest to lowest.
+  command: "egrep  'tcp\ .*:**LISTEN' netstat.out | awk '{print $4}' | sed -e 's/.*\://g' | sort -nr"
+  expected_output:
+    lines:
+      - '45922'
+      - '9090'
+      - '8080'
+      - '1723'
+      - '1254'
+      - '1244'
+      - '1234'
+      - '111'
+      - '80'
+      - '22'
