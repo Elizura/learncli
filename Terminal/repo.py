@@ -2,13 +2,15 @@ from dataclasses import dataclass
 from injector import inject
 from prompt_toolkit.history import FileHistory
 
+from Commons.constants import HISTORY_PATH
+
 
 @inject
 @dataclass
 class TerminalRepo:
 
     def __init__(self):
-        self.history = FileHistory(".learn_cli_history")
+        self.history = FileHistory(HISTORY_PATH)
 
     def get_terminal_history(self):
         return self.history

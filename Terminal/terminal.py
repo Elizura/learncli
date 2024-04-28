@@ -3,7 +3,7 @@ import os
 from dataclasses import dataclass
 from injector import inject
 from prompt_toolkit import *
-from Commons.constants import ANSWER_SUBMISSION_PATH
+from Commons.constants import ANSWER_SUBMISSION_PATH, HISTORY_PATH
 from DB.repo import DBRepo
 from Questions.core import Question, QuestionType
 from Questions.repo import QuestionsRepo
@@ -67,7 +67,7 @@ class Terminal:
                 if submitted:
                     is_correct = self.check_answer(question=question)
                     if is_correct:
-                        self.db_repo.set_status(level=level, qno=question_number + 1)
+                        self.advance_to_next_question(level, question_number)
                         level, question_number = self.db_repo.get_status()
                         question = self.repo.get_question(
                             level=level, question_number=question_number
@@ -90,7 +90,7 @@ class Terminal:
                 enable_system_prompt=True,
                 style=self.custom_style,
                 key_bindings=kb,
-                lexer=PygmentsLexer(BashLexer)
+                lexer=PygmentsLexer(BashLexer),
             )
 
             if inp == Command.SUBMIT:
@@ -103,20 +103,30 @@ class Terminal:
 
     def check_answer(self, question: Question):
         expected_output = question.expected_output
-        command = question.command
         answered = False
-        pipe = os.popen(command)
-        out = pipe.read()
-        if question.question_number == 6:
+        if question.question_number == 6 or question.question_number == 4:
             return True
         if question.type == QuestionType.TYPE1:
-            pipe.close()
-            answered = out.splitlines() == expected_output
-
+            answered = self.execute_command_and_check(question.command, expected_output)
         elif question.type == QuestionType.TYPE2:
-            with open(file=ANSWER_SUBMISSION_PATH, mode="r") as ans:
-                content = ans.read().split("\n")
-                ans = [line.strip() for line in content if line.strip()]
-                answered = ans == expected_output
+            answered = self.check_history_and_execute(expected_output)
 
         return answered
+
+    def execute_command_and_check(self, command, expected_output):
+        pipe = os.popen(command)
+        out = pipe.read()
+        pipe.close()
+        return out.splitlines() == expected_output
+
+    def check_history_and_execute(self, expected_output):
+        with open(file=HISTORY_PATH, mode="r") as ans:
+            content = ans.read().split("\n")
+            last_cmd = [line.strip("+") for line in content if line.strip()][-1]
+            pipe = os.popen(last_cmd)
+            out = pipe.read()
+            print(out, expected_output)
+            return out.splitlines() == expected_output
+
+    def advance_to_next_question(self, level, question_number):
+        self.db_repo.set_status(level=level, qno=question_number + 1)
