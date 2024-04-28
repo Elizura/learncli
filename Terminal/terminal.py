@@ -3,10 +3,12 @@ import os
 from dataclasses import dataclass
 from injector import inject
 from prompt_toolkit import *
-from Commons.constants import ANSWER_SUBMISSION_PATH, HISTORY_PATH
+from Commons.constants import HISTORY_PATH
 from DB.repo import DBRepo
 from Questions.core import Question, QuestionType
 from Questions.repo import QuestionsRepo
+from TUIStyles.style_provider import StyleProvider
+from Terminal.fancy_zhs import get_prompt
 from Terminal.repo import TerminalRepo
 from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
@@ -24,16 +26,12 @@ class Terminal:
 
     @inject
     def __init__(
-        self, terminal_repo: TerminalRepo, repo: QuestionsRepo, db_repo: DBRepo
+        self, terminal_repo: TerminalRepo, repo: QuestionsRepo, db_repo: DBRepo, style_provider:StyleProvider
     ):
         self.db_repo = db_repo
         self.terminal_repo = terminal_repo
         self.repo = repo
-        self.custom_style = Style.from_dict(
-            {
-                "prompt": "ansicyan",
-            }
-        )
+        self.style_provider = style_provider
 
     def clear_screen(self):
         os.system("cls" if os.name == "nt" else "clear")
@@ -83,12 +81,12 @@ class Terminal:
             event.app.exit(result=Command.SUBMIT)
 
         try:
-            inp = prompt(
-                "> ",
+            inp = prompt(                
+                get_prompt,
+                style=self.style_provider.get_fancy_zhs_style(),
                 history=self.terminal_repo.get_terminal_history(),
                 multiline=False,
-                enable_system_prompt=True,
-                style=self.custom_style,
+                enable_system_prompt=True,                
                 key_bindings=kb,
                 lexer=PygmentsLexer(BashLexer),
             )
