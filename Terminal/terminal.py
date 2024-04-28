@@ -1,4 +1,3 @@
-import argparse
 from enum import Enum
 import os
 from dataclasses import dataclass
@@ -11,7 +10,8 @@ from Questions.repo import QuestionsRepo
 from Terminal.repo import TerminalRepo
 from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.keys import Keys
+from pygments.lexers.shell import BashLexer
+from prompt_toolkit.lexers import PygmentsLexer
 
 
 class Command(Enum):
@@ -90,6 +90,7 @@ class Terminal:
                 enable_system_prompt=True,
                 style=self.custom_style,
                 key_bindings=kb,
+                lexer=PygmentsLexer(BashLexer)
             )
 
             if inp == Command.SUBMIT:
@@ -110,7 +111,6 @@ class Terminal:
             return True
         if question.type == QuestionType.TYPE1:
             pipe.close()
-            print("out>>", out.splitlines(), "the expected>>", expected_output)
             answered = out.splitlines() == expected_output
 
         elif question.type == QuestionType.TYPE2:
