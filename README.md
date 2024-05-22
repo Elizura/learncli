@@ -2,12 +2,6 @@
 
 Welcome to the CLI Quiz Tool! This command-line tool is designed to help users learn and practice Linux CLI commands. You'll be given tasks to perform directly in the terminal, and if you perform them correctly, you'll advance to the next question.
 
-## Features
-
-- Interactive CLI quizzes
-- Real-time feedback on your commands
-- Progress through multiple levels of difficulty
-
 ## Installation
 
 To get started with the CLI Quiz Tool, follow these steps:
