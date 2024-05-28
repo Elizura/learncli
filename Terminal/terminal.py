@@ -9,8 +9,8 @@ from Questions.core import Question, QuestionType
 from Questions.repo import QuestionsRepo
 from TUIStyles.style_provider import StyleProvider
 from Terminal.fancy_zhs import get_prompt
+from Terminal.intro_screen import introduce
 from Terminal.repo import TerminalRepo
-from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
 from pygments.lexers.shell import BashLexer
 from prompt_toolkit.lexers import PygmentsLexer
@@ -50,6 +50,9 @@ class Terminal:
         print("╚" + "═" * (max_length + 4) + "╝")
 
     def run(self):
+        if self.db_repo.is_first_run():
+            self.db_repo.mark_as_run()
+            introduce()
         level, question_number = self.db_repo.get_status()
         question = self.repo.get_question(level=level, question_number=question_number)
         quit = False

@@ -35,17 +35,17 @@ class DBRepo:
                 (1, 1),
             )
 
+        self.cur.execute(
+            """
+                CREATE TABLE IF NOT EXISTS app_usage(                
+                    first_run BOOLEAN
+                )
+            """
+        )
         self.conn.commit()
 
     def get_status(self) -> State:
         return self.cur.execute("SELECT * FROM Status").fetchall()[0]
-        # return [
-        #     State(
-        #         level=dt[0],
-        #         qno=dt[1]
-        #     )
-        #     for dt in self.cur.execute("SELECT * FROM Status").fetchall()
-        # ]
 
     def set_status(self, level, qno):
         cur_level, cur_qno = self.get_status()
@@ -57,3 +57,13 @@ class DBRepo:
 
     def reset_status(self):
         self.set_status(1, 1)
+
+    def is_first_run(self):
+        self.cur.execute('SELECT COUNT(*) FROM app_usage WHERE first_run = 1')
+        res = self.cur.fetchone()
+        is_first_run = res[0] == 0
+        return is_first_run
+
+    def mark_as_run(self):
+        self.cur.execute('INSERT INTO app_usage (first_run) VALUES (1)')
+        self.conn.commit()
