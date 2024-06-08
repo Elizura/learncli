@@ -20,4 +20,5 @@ if __name__ == "__main__":
     db_repo = injector.get(DBRepo)
     db_repo.get_status()
     terminal = injector.get(Terminal)
+    
     terminal.run()
