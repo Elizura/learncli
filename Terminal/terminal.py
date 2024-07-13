@@ -1,6 +1,7 @@
 from enum import Enum
 import os
 from dataclasses import dataclass
+import subprocess
 from injector import inject
 from prompt_toolkit import *
 from Commons.constants import HISTORY_PATH
@@ -61,7 +62,7 @@ class Terminal:
             is_correct = False
             while not is_correct and not quit:
                 submitted, cmd = self.handle_inputs()
-                if cmd == Command.QUIT:
+                if cmd == Command.QUIT or cmd == "exit":
                     self.clear_screen()
                     quit = True
                     break
@@ -72,9 +73,11 @@ class Terminal:
                         level, question_number = self.db_repo.get_status()
                         question = self.repo.get_question(
                             level=level, question_number=question_number
-                        )
+                        )                
                 else:
-                    os.system(cmd)
+                    rerun = self.handle_terminal_commands(command=cmd)
+                    if rerun:
+                        self.display_content(content=question.description)
 
     def handle_inputs(self):
         kb = KeyBindings()
@@ -114,11 +117,21 @@ class Terminal:
 
         return answered
 
+
     def execute_command_and_check(self, command, expected_output):
-        pipe = os.popen(command)
-        out = pipe.read()
-        pipe.close()
-        return out.splitlines() == expected_output
+        try:
+            pipe = subprocess.Popen(command, cwd="/playground", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = pipe.communicate()
+            if pipe.returncode != 0:
+                if stderr:
+                    print(stderr.decode())
+                return False
+            output = stdout.decode().splitlines()
+            return output == expected_output
+        except Exception as e:
+            print(f"Exception occurred: {e}")
+            return False
+
 
     def check_history_and_execute(self, expected_output):
         with open(file=HISTORY_PATH, mode="r") as ans:
@@ -126,8 +139,24 @@ class Terminal:
             last_cmd = [line.strip("+") for line in content if line.strip()][-1]
             pipe = os.popen(last_cmd)
             out = pipe.read()
-            print(out, expected_output)
             return out.splitlines() == expected_output
 
     def advance_to_next_question(self, level, question_number):
         self.db_repo.set_status(level=level, qno=question_number + 1)
+
+
+    def handle_terminal_commands(self, command):
+        if command.startswith('cd '):
+            try:
+                os.chdir(command.split(' ', 1)[1])
+                return False
+            except FileNotFoundError:
+                print("Directory not found.")
+                return False
+            except IndexError:
+                os.chdir(os.path.expanduser("~"))
+                return False
+        else:
+            os.system(command)
+            if command == 'clear':
+                return True
