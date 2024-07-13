@@ -1,3 +1,3 @@
-QUESTIONS_SOURCE_PATH = "questions.yaml"
-ANSWER_SUBMISSION_PATH = "answer.txt"
-HISTORY_PATH = ".learn_cli_history"
+QUESTIONS_SOURCE_PATH = "/learncli/questions.yaml"
+ANSWER_SUBMISSION_PATH = "/learncli/answer.txt"
+HISTORY_PATH = "/learncli/.learn_cli_history"

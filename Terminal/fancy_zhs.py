@@ -14,7 +14,7 @@ def get_prompt() -> HTML:
     """
     Build the prompt dynamically every time its rendered.
     """
-    user_name = os.getlogin()
+    user_name = os.getenv('USER', 'user')
     cur_path = os.getcwd()
     left_part = HTML(
         "<left-part>"

@@ -13,7 +13,7 @@ class State:
 @inject
 class DBRepo:
     def __init__(self):
-        self.conn = sqlite3.connect("state.db")
+        self.conn = sqlite3.connect("/learncli/state.db")
         self.cur = self.conn.cursor()
 
         self.cur.execute(
