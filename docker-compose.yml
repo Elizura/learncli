@@ -3,13 +3,9 @@ services:
   app:
     build: .
     volumes:
-      - .:/learncli
-      - /learncli/env 
       - learnclivolume:/playground
     stdin_open: true
     tty: true
-    ports:
-      - "4000:4000"
     command: /learncli/env/bin/python /learncli/main.py
 
 volumes:
