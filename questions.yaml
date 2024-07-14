@@ -31,10 +31,9 @@
   question_number: 4
   description: List all files and directories in the current directory
   command: ls
-  expected_output:    
-      - hello.txt
-      - link.txt
+  expected_output:      
       - Test
+      - test.txt
 
 - id: 5
   level: 1

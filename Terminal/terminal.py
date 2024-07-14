@@ -108,8 +108,6 @@ class Terminal:
     def check_answer(self, question: Question):
         expected_output = question.expected_output
         answered = False
-        if question.question_number == 6 or question.question_number == 4:
-            return True
         if question.type == QuestionType.TYPE1:
             answered = self.execute_command_and_check(question.command, expected_output)
         elif question.type == QuestionType.TYPE2:
