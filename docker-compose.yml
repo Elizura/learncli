@@ -3,10 +3,13 @@ services:
   app:
     build: .
     volumes:
-      - learnclivolume:/playground
+      - learnclivolume:/learncli
+    logging:
+      driver: "syslog"
+    attach: false
     stdin_open: true
     tty: true
-    command: /learncli/env/bin/python /learncli/main.py
+    command: python /learncli/main.py
 
 volumes:
   learnclivolume:
