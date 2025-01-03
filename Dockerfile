@@ -1,20 +1,28 @@
 FROM ubuntu:latest
 
+# Install Python and dependencies
 RUN apt update && apt install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && apt update && apt install -y python3.10 python3.10-venv python3-pip
+    add-apt-repository ppa:deadsnakes/ppa && apt update && \
+    apt install -y python3.10 python3.10-venv python3-pip && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
+# Expose port 4000
 EXPOSE 4000
 
-RUN mkdir /learncli && chmod 000 /learncli
+# Set up the project directory
+RUN mkdir /learncli
 WORKDIR /learncli
 
+# Copy project files into the container
 COPY . .
 
+RUN chmod -R 777 /learncli && \
+    chown -R root:root /learncli
+
+# Create a virtual environment and install dependencies
 RUN python3.10 -m venv venv && \
-    . venv/bin/activate && \
-    pip install --upgrade pip==24.0 && \
-    pip install -r /learncli/requirements.txt
+    ./venv/bin/pip install --upgrade pip && \
+    ./venv/bin/pip install -r requirements.txt
 
-CMD ["/learncli/venv/bin/python", "/learncli/main.py"]
-
-WORKDIR /playground
+# Set the default command
+CMD ["./venv/bin/python", "/learncli/main.py"]
