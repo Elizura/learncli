@@ -118,7 +118,7 @@ class Terminal:
 
     def execute_command_and_check(self, command, expected_output):
         try:
-            pipe = subprocess.Popen(command, cwd="/playground", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            pipe = subprocess.Popen(command, cwd="/learncli", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = pipe.communicate()
             if pipe.returncode != 0:
                 if stderr:

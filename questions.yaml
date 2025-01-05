@@ -25,16 +25,6 @@
   expected_output:    
       - Hello, World!
 
-- id: 4
-  level: 1
-  type: 2
-  question_number: 4
-  description: List all files and directories in the current directory
-  command: ls
-  expected_output:      
-      - Test
-      - test.txt
-
 - id: 5
   level: 1
   type: 1
@@ -43,15 +33,6 @@
   command: ls -d hello.txt
   expected_output:    
       - hello.txt
-
-- id: 6
-  level: 1
-  type: 1
-  question_number: 6
-  description: Create a symbolic link named link.txt pointing to hello.txt
-  command: ls -l link.txt
-  expected_output:    
-      - link.txt -> hello.txt
 
 - id: 7
   level: 1
@@ -87,3 +68,23 @@
   command: wc -l hello.txt
   expected_output:    
       - 3 hello.txt
+
+- id: 4
+  level: 1
+  type: 2
+  question_number: 4
+  description: List all files and directories in the current directory
+  command: ls
+  expected_output:    
+      - hello.txt
+      - link.txt
+      - Test
+
+- id: 6
+  level: 1
+  type: 1
+  question_number: 6
+  description: Create a symbolic link named link.txt pointing to hello.txt
+  command: ls -l link.txt
+  expected_output:    
+      - link.txt -> hello.txt

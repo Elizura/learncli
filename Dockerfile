@@ -1,15 +1,20 @@
+# Use the official Python image
 FROM python:3.10-slim
 
-RUN mkdir /learncli && chmod 000 /learncli
+# Set up the project directory
+RUN mkdir /learncli
 
+# Set the working directory
 WORKDIR /learncli
 
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Copy project files into the container
 COPY . .
 
-EXPOSE 4000
+# Define a volume for the SQLite database
+VOLUME ["/learncli"]
 
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Set the default command
 CMD ["python", "/learncli/main.py"]

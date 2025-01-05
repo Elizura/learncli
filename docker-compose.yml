@@ -2,14 +2,7 @@ version: '3.8'
 services:
   app:
     build: .
-    volumes:
-      - learnclivolume:/learncli
     logging:
-      driver: "syslog"
-    attach: false
-    stdin_open: true
+      driver: none
     tty: true
-    command: python /learncli/main.py
-
-volumes:
-  learnclivolume:
+    attach: false
