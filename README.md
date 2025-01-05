@@ -16,9 +16,9 @@ To get started with the CLI Quiz Tool, follow these steps:
    cd learncli
    ```
 
-3. Run the main script:
+3. Run docker compose to start the service:
    ```sh
-   python main.py
+   docker compose run app
    ```
 
 ## Usage
@@ -26,12 +26,9 @@ To get started with the CLI Quiz Tool, follow these steps:
 When running the tool, you'll be asked to perform various actions in the terminal. If you execute the command correctly, you'll move on to the next question.
 After finishing the task asked on the quize you can submit your solution using ```ctrl + s```
 
-### Important Note
-While using this tool, please be cautious as the commands you execute will directly affect your PC. Ensure you understand the commands and their potential impact before executing them.
-
 ## Contributing
 
-We welcome contributions to improve and expand the CLI Quiz Tool. To contribute:
+I welcome contributions to improve and expand the CLI Quiz Tool. To contribute:
 
 1. Check out the [issues section](https://github.com/Elizura/learncli/issues) for available tasks and feature requests.
 2. Choose an issue, implement the feature, and submit a pull request (PR) to the main branch.
