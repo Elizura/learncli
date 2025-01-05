@@ -108,8 +108,6 @@ class Terminal:
     def check_answer(self, question: Question):
         expected_output = question.expected_output
         answered = False
-        if question.question_number == 6 or question.question_number == 4:
-            return True
         if question.type == QuestionType.TYPE1:
             answered = self.execute_command_and_check(question.command, expected_output)
         elif question.type == QuestionType.TYPE2:
@@ -120,7 +118,7 @@ class Terminal:
 
     def execute_command_and_check(self, command, expected_output):
         try:
-            pipe = subprocess.Popen(command, cwd="/playground", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            pipe = subprocess.Popen(command, cwd="/learncli", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = pipe.communicate()
             if pipe.returncode != 0:
                 if stderr:
